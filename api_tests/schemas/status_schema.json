@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "required": [
+    "vehicle_id",
+    "online",
+    "battery_level",
+    "odometer_km",
+    "locked",
+    "location",
+    "updated_at"
+  ],
+  "properties": {
+    "vehicle_id": { "type": "string" },
+    "online": { "type": "boolean" },
+    "battery_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "odometer_km": {
+      "type": "number",
+      "minimum": 0
+    },
+    "locked": { "type": "boolean" },
+    "location": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["latitude", "longitude"],
+          "properties": {
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "updated_at": { "type": "string" }
+  },
+  "additionalProperties": false
+}

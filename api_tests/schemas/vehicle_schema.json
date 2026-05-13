@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["vehicle_id", "vin", "model", "plate_no", "online"],
+  "properties": {
+    "vehicle_id": { "type": "string" },
+    "vin": { "type": "string" },
+    "model": { "type": "string" },
+    "plate_no": { "type": "string" },
+    "online": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}
