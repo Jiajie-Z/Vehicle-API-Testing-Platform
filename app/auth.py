@@ -1,22 +1,21 @@
-from fastapi import Header, HTTPException, status
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.data_store import USERS
 
 TOKEN_PREFIX = "vehicle-demo-token"
+
+bearer_scheme = HTTPBearer()
 
 
 def create_token(username: str) -> str:
     return f"{TOKEN_PREFIX}:{username}"
 
 
-def get_current_user(authorization: str | None = Header(default=None)) -> dict:
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Missing bearer token",
-        )
-
-    token = authorization.removeprefix("Bearer ").strip()
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+) -> dict:
+    token = credentials.credentials
 
     if not token.startswith(f"{TOKEN_PREFIX}:"):
         raise HTTPException(
