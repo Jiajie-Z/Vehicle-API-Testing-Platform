@@ -57,3 +57,6 @@ TRIPS = {
     ],
     "VH-1002": [],
 }
+
+ALERTS: list[dict] = []
+TELEMETRY_EVENTS: list[dict] = []
