@@ -57,3 +57,6 @@ vehicle-api-testing-platform/
   docker-compose.yml
   requirements.txt
   README.md
+
+
+  ![**alt text**](image.png)
