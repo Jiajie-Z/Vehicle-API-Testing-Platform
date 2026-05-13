@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routes import auth
+from app.routes import auth, vehicles
 
 app = FastAPI(
     title="Vehicle Connectivity API",
@@ -14,3 +14,4 @@ def health_check() -> dict[str, str]:
 
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(vehicles.router, prefix="/api/vehicles", tags=["vehicles"])
