@@ -1,18 +1,19 @@
 # Vehicle API Testing Platform
 
-这是一个面向车联网业务场景的 API 自动化测试与性能验证项目。
+A vehicle connectivity API testing project built around a simulated connected-car backend service.
 
-项目会搭建一个模拟车辆数据服务，并围绕用户认证、车辆查询、车辆状态、行驶记录、告警上报、遥测数据上传等接口，逐步实现接口自动化测试、响应结构校验、性能测试和 CI 自动执行流程。
+The project includes API development, automated API regression tests, JSON Schema response validation, performance testing with Locust, Docker-based deployment, and GitHub Actions CI.
 
-## 项目目标
+## Features
 
-- 搭建一个具备车联网业务语义的后端 API 服务
-- 使用 PyTest 设计接口自动化测试用例
-- 使用 JSON Schema 校验接口响应结构
-- 使用 Locust 模拟并发接口访问
-- 使用 Docker 和 GitHub Actions 完成基础工程化配置
+- Simulated connected vehicle APIs for authentication, vehicle status, trip records, alerts, and telemetry upload
+- Automated API tests using PyTest
+- JSON Schema validation for API response structure
+- Performance testing scenarios using Locust
+- Docker Compose support for local deployment
+- GitHub Actions workflow for automated regression testing
 
-## 技术栈
+## Tech Stack
 
 - Python
 - FastAPI
@@ -22,19 +23,19 @@
 - Docker
 - GitHub Actions
 
-## 计划实现的接口
+## API Overview
 
-| 模块 | 接口 | 说明 |
+| Module | Endpoint | Description |
 | --- | --- | --- |
-| Auth | `POST /api/auth/login` | 用户登录 |
-| Vehicles | `GET /api/vehicles` | 查询车辆列表 |
-| Vehicles | `GET /api/vehicles/{vehicle_id}/status` | 查询车辆状态 |
-| Vehicles | `GET /api/vehicles/{vehicle_id}/trips` | 查询行驶记录 |
-| Alerts | `POST /api/alerts` | 上报告警事件 |
-| Alerts | `GET /api/alerts` | 查询告警列表 |
-| Telemetry | `POST /api/telemetry` | 上传车辆遥测数据 |
+| Auth | `POST /api/auth/login` | User login |
+| Vehicles | `GET /api/vehicles` | Get vehicle list |
+| Vehicles | `GET /api/vehicles/{vehicle_id}/status` | Get vehicle status |
+| Vehicles | `GET /api/vehicles/{vehicle_id}/trips` | Get vehicle trip records |
+| Alerts | `POST /api/alerts` | Submit vehicle alert |
+| Alerts | `GET /api/alerts` | Get alert list |
+| Telemetry | `POST /api/telemetry` | Upload vehicle telemetry data |
 
-## 计划目录结构
+## Project Structure
 
 ```text
 vehicle-api-testing-platform/
@@ -57,6 +58,139 @@ vehicle-api-testing-platform/
   docker-compose.yml
   requirements.txt
   README.md
+```
 
+## Quick Start
 
-  ![**alt text**](image.png)
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate it on Windows:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the API service:
+
+```bash
+uvicorn app.main:app --reload --port 9000
+```
+
+Health check:
+
+```text
+http://127.0.0.1:9000/health
+```
+
+Swagger API documentation:
+
+```text
+http://127.0.0.1:9000/docs
+```
+
+## Test Account
+
+```text
+username: test_driver
+password: Drive@123
+```
+
+## Run API Tests
+
+```bash
+pytest api_tests -v
+```
+
+Current automated test result:
+
+```text
+14 passed
+```
+
+The API test suite covers:
+
+- Successful login and invalid password scenarios
+- Missing or invalid authentication token
+- Vehicle list query
+- Online and offline vehicle status query
+- Unknown vehicle error handling
+- Trip record query
+- Alert creation and invalid alert type validation
+- Telemetry upload and boundary validation for battery level and location
+
+## Run Performance Tests
+
+Start the API service first:
+
+```bash
+uvicorn app.main:app --reload --port 9000
+```
+
+Start Locust:
+
+```bash
+locust -f performance_tests/locustfile.py --host http://127.0.0.1:9000
+```
+
+Open the Locust web UI:
+
+```text
+http://localhost:8089
+```
+
+Example performance test result:
+
+```text
+Total requests: 2166
+Failures: 0
+Failure rate: 0%
+RPS: 8.3
+Average response time: 2.3 ms
+P95 response time: 3 ms
+P99 response time: 8 ms
+Max response time: 52 ms
+```
+
+## Docker
+
+Build and start the service:
+
+```bash
+docker compose up --build
+```
+
+Visit:
+
+```text
+http://127.0.0.1:9000/health
+```
+
+Stop the service:
+
+```bash
+docker compose down
+```
+
+## Test Plan
+
+The test plan includes test scope, test design methods, API coverage, and performance testing strategy.
+
+See:
+
+```text
+docs/test-plan.md
+```
+
+## Notes
+
+This project is designed as a practical testing portfolio project for API test automation, test framework design, and connected-vehicle service validation.
